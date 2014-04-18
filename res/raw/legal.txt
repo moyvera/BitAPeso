@@ -1,0 +1,1 @@
+Bit A Peso para Android es desarrollada usando software libre: <a href=https://www.gnu.org/copyleft/gpl.html> Licencia </a>

@@ -1,0 +1,88 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.bitapeso.bitapeso.MainActivity"
+    tools:ignore="MergeRootFrame" >
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="98dp"
+        android:text="@string/title"
+        android:textColor="#F9A01B"
+        android:textStyle="bold"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center|top"
+        android:layout_marginTop="160dp">
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#F9A01B"
+            android:textSize="25sp"
+            android:text="@string/bitcoin" />
+        
+        <EditText
+	        android:id="@+id/bitcoin"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:ems="10"
+        	android:inputType="numberDecimal" >
+
+        <requestFocus />
+    </EditText>
+        
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center|top"
+        android:layout_marginTop="240dp">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#F9A01B"
+            android:textSize="25sp"
+            android:text="@string/peso" />
+        
+        <EditText
+	        android:id="@+id/peso"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:ems="10"
+        	android:inputType="numberDecimal" >
+
+        <requestFocus />
+    	</EditText>
+        
+    </LinearLayout>
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center|bottom"
+        android:layout_marginBottom="20dp">
+        <TextView
+            android:id="@+id/url"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#8D8D8D"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:text="@string/url" />
+    </LinearLayout>
+       
+</RelativeLayout>
+

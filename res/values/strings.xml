@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Bit a Peso</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title">Bit a Peso</string>
+    <string name="bitcoin">฿</string>
+    <string name="peso">$</string>
+    <string name="url">www.bitapeso.com</string>
+    <string name="about_us">Sobre Nosotros</string>
+
+</resources>
