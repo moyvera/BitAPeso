@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
+import org.w3c.dom.Text;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
@@ -30,15 +33,22 @@ public class AboutDialog extends Dialog{
 		setContentView(R.layout.about);
 		
 		TextView infoText = (TextView)findViewById(R.id.info_text);
-		infoText.setText(Html.fromHtml(readRawTextFile(R.raw.info)));
-		
 		TextView legalText = (TextView)findViewById(R.id.legal_text);
+		TextView extraInfoText = (TextView) findViewById(R.id.info_text_patch);
+		
+		infoText.setText(Html.fromHtml(readRawTextFile(R.raw.info)));
 		legalText.setText(Html.fromHtml(readRawTextFile(R.raw.legal)));
+		extraInfoText.setText(Html.fromHtml("<a href=\"http://www.cesar.sx\">www.cesar.sx</a><br /><br/>"));
 		
 		infoText.setLinkTextColor(Color.parseColor("#F9A01B"));
-		infoText.setClickable(true);
+		extraInfoText.setLinkTextColor(Color.parseColor("#F9A01B"));
+		
 		infoText.setMovementMethod (LinkMovementMethod.getInstance());
-		//Linkify.addLinks(infoText, Linkify.ALL);
+		legalText.setMovementMethod(LinkMovementMethod.getInstance());
+		extraInfoText.setMovementMethod(LinkMovementMethod.getInstance());
+		
+		Linkify.addLinks(infoText, Linkify.ALL);
+		Linkify.addLinks(legalText, Linkify.ALL);
 	}
 	
 	public static String readRawTextFile(int id) {

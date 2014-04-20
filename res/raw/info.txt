@@ -1,9 +1,9 @@
-
+<html>
 <h3>Bit a Peso</h3>
-Version 1.0<br>
-Copyleft 2014<br>
-<b><a href="www.bitapeso.com">www.bitapeso.com</a></b><br><br>
-Mois&eacute;s Vera<br> 
-<a href="mailto:moyvera@geekalt42.net?Subject=BitAPeso">moyvera@geekalt42.net</a><br><br>
-Cesar Gayt&aacute;n<br>
-<a href=www.cesar.sx> www.cesar.sx </a><br>
+Version 1.0<br />
+Copyleft 2014<br />
+<b><a href=\"http://www.bitapeso.com\">www.bitapeso.com</a></b><br /><br />
+Mois&eacute;s Vera<br /> 
+<a href=\"mailto:moyvera@geekalt42.net?Subject=BitAPeso\">moyvera@geekalt42.net</a><br /><br />
+Cesar Gayt&aacute;n
+</html>

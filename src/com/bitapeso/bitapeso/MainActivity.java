@@ -18,6 +18,7 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
@@ -39,15 +40,18 @@ public class MainActivity extends ActionBarActivity {
 	static EditText bitcoin;
     static EditText peso;
     
-	static String url = "as security issue we have saved this link"; 
+	static String url = "http://www.bitapeso.com/json"; 
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.activity_main);
 		TextView urlText = (TextView) findViewById(R.id.url);
-	    urlText.setText(Html.fromHtml("<a href=http://www.bitapeso.com> www.bitapeso.com "));
+		
+	    urlText.setText(Html.fromHtml("<a href=\"http://www.bitapeso.com\"> www.bitapeso.com </a> "));
 	    urlText.setMovementMethod(LinkMovementMethod.getInstance());
+	    Linkify.addLinks(urlText, Linkify.ALL);
+	    
 		bitcoin = (EditText) findViewById(R.id.bitcoin);
 		peso = (EditText) findViewById(R.id.peso);
 		

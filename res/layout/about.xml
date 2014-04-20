@@ -10,12 +10,28 @@
 	    	android:layout_height="fill_parent" 
 	    	android:src="@drawable/ic_launcher"
 	    	android:layout_gravity="center"/>
-		<TextView
-			android:id="@+id/info_text"
-			android:gravity="center"
-			android:layout_gravity="center"
-			android:layout_width="fill_parent"
-			android:layout_height="fill_parent" />
+		<LinearLayout
+    		android:id="@+id/new_client"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:clickable="true"
+    		android:orientation="vertical" 
+    		android:gravity="center">
+			<TextView
+				android:id="@+id/info_text"
+				android:gravity="center"
+				android:layout_gravity="center_vertical"
+			
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent" />
+			<TextView
+				android:id="@+id/info_text_patch"
+				android:gravity="center"
+				android:layout_gravity="center_vertical"
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent" />
+		</LinearLayout>
+		
 	</TableRow>
 	<TableRow>
 		<TextView
@@ -26,6 +42,7 @@
 			android:textStyle="italic"
 			android:layout_span="2"
 			android:layout_margin="8dp"
-			android:textColor="#cccccc" />
+			android:textColor="#cccccc"
+			android:text="hola" />
 	</TableRow>
 </TableLayout>
