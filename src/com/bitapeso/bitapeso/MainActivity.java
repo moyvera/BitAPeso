@@ -40,7 +40,7 @@ public class MainActivity extends ActionBarActivity {
 	static EditText bitcoin;
     static EditText peso;
     
-	static String url = "http://www.bitapeso.com/json"; 
+	static String url = "as a security issue We hava saved this link"; 
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
