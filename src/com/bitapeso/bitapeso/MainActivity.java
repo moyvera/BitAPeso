@@ -34,43 +34,44 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity {
-	
+
 	static TextWatcher inputTextWatcherBitcoin;
 	static TextWatcher inputTextWatcherPeso;
-	
+
 	static EditText bitcoin;
-    static EditText peso;
-    
-	static String url = "as a security issue We hava saved this link"; 
-	
+	static EditText peso;
+
+	static String url = "http://bitapeso.com/json/";
+
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		setContentView(R.layout.activity_main);
 		TextView urlText = (TextView) findViewById(R.id.url);
-		
-	    urlText.setText(Html.fromHtml("<a href=\"http://www.bitapeso.com\"> www.bitapeso.com </a> "));
-	    urlText.setMovementMethod(LinkMovementMethod.getInstance());
-	    Linkify.addLinks(urlText, Linkify.ALL);
-	    
+
+		urlText.setText(Html
+				.fromHtml("<a href=\"http://www.bitapeso.com\"> www.bitapeso.com </a> "));
+		urlText.setMovementMethod(LinkMovementMethod.getInstance());
+		Linkify.addLinks(urlText, Linkify.ALL);
+
 		bitcoin = (EditText) findViewById(R.id.bitcoin);
 		peso = (EditText) findViewById(R.id.peso);
-		
+
 		new LongOperation().execute(url);
 	}
-	
-	 @Override
+
+	@Override
 	public void onStart() {
-	    super.onStart();
-	    EasyTracker.getInstance(this).activityStart(this);
+		super.onStart();
+		EasyTracker.getInstance(this).activityStart(this);
 	}
 
 	@Override
 	public void onStop() {
-	    super.onStop();
-	    EasyTracker.getInstance(this).activityStop(this); 
+		super.onStop();
+		EasyTracker.getInstance(this).activityStop(this);
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -110,131 +111,144 @@ public class MainActivity extends ActionBarActivity {
 			return rootView;
 		}
 	}
-	
-    
-    private class LongOperation  extends AsyncTask<String, Void, Void> {
-          
-        private final HttpClient Client = new DefaultHttpClient();
-        private String Content;
-        private String Error = null;
-        private ProgressDialog Dialog = new ProgressDialog(MainActivity.this);
-        
-        private float btc = 0;
-        private float dolar = 0;
-        private float mxn = 0;
-        
-        protected void onPreExecute() {
-        	Dialog.setMessage("Espera por favor...");
-        	Dialog.setCancelable(false);
-            Dialog.show(); 
-        }
-  
-        protected Void doInBackground(String... urls) {
-            BufferedReader reader=null;
-            
-            try{ 
-            	URL url = new URL(urls[0]);
-            	URLConnection conn = url.openConnection(); 
-                conn.setDoOutput(true); 
-                // Get the server response 
-                reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                StringBuilder sb = new StringBuilder();
-                String line = null;
-                while((line = reader.readLine()) != null){
-                	//Append server response in string
-                	sb.append(line + "");
-                }
-                // Append Server Response To Content String 
-                Content = sb.toString();
-            }catch(Exception ex){
-            	Error = ex.getMessage();
-            }
-            finally{
-            	try{	reader.close();	}
-            	catch(Exception ex) {}
-            }
-            return null;
-        }
-          
-        protected void onPostExecute(Void unused) {
-            if (Error != null) {
-            	//settext with error
-            	peso.setText("NaN");
-            	bitcoin.setText("NaN");
-            } else {
-                JSONObject jsonResponse;
-                try {
-                	jsonResponse = new JSONObject(Content);
-                       
-                    this.btc = (float) jsonResponse.getDouble("btc");
-                    this.dolar = (float) jsonResponse.getDouble("dolar");
-                    this.mxn = (float) jsonResponse.getDouble("mxn");
-                    Toast.makeText(getApplicationContext(), "Valor actual bitcoin $"+this.mxn, Toast.LENGTH_SHORT).show();
-                    
-                    inputTextWatcherBitcoin = new TextWatcher() {
-                        public void afterTextChanged(Editable s) { 
-                        		peso.removeTextChangedListener(inputTextWatcherPeso);
-                        		float realValue;
-                        		if(s.toString().compareTo("") != 0){
-                        			realValue = (float) (Double.valueOf(s.toString()) * getMXN());
-                        			DecimalFormat decimalFormat = new DecimalFormat("0.########");
-                        			peso.setText("" + decimalFormat.format(realValue));
-                        		}
-                        		else peso.setText("");
-                                peso.addTextChangedListener(inputTextWatcherPeso);
-                        }
-                        
-            			@Override
-            			public void beforeTextChanged(CharSequence s, int start, int count,
-            					int after) {}
 
-            			@Override
-            			public void onTextChanged(CharSequence s, int start, int before,
-            					int count) {}
-                    };
-                    inputTextWatcherPeso = new TextWatcher() {
-                        public void afterTextChanged(Editable s) { 
-                        		bitcoin.removeTextChangedListener(inputTextWatcherBitcoin);
-                        		float realValue;
-								if(s.toString().compareTo("") != 0){
-                        			realValue = (float) (Float.valueOf(s.toString()) / getMXN());
-                        			DecimalFormat decimalFormat = new DecimalFormat("0.#####");
-                        			bitcoin.setText( "" + decimalFormat.format(realValue));
-								}
-                        		else bitcoin.setText("");
-                                bitcoin.addTextChangedListener(inputTextWatcherBitcoin);
-                        }
-                        
-            			@Override
-            			public void beforeTextChanged(CharSequence s, int start, int count,
-            					int after) {}
+	private class LongOperation extends AsyncTask<String, Void, Void> {
 
-            			@Override
-            			public void onTextChanged(CharSequence s, int start, int before,
-            					int count) {}
-                    };
-                    
-                    bitcoin.addTextChangedListener(inputTextWatcherBitcoin);
-                    peso.addTextChangedListener(inputTextWatcherPeso);
-                    
-                 } catch (JSONException e) {
-                	 e.printStackTrace();
-                 }
-             }
-            Dialog.dismiss();
-        }
-        
-        public double getBTC(){
-        	return this.btc;
-        }
-        
-        public double getMXN(){
-        	return this.mxn;
-        }
-        
-        public double getDolar(){
-        	return this.dolar;
-        }
-    }
+		private final HttpClient Client = new DefaultHttpClient();
+		private String Content;
+		private String Error = null;
+		private ProgressDialog Dialog = new ProgressDialog(MainActivity.this);
+
+		private float btc = 0;
+		private float dolar = 0;
+		private float mxn = 0;
+
+		protected void onPreExecute() {
+			Dialog.setMessage("Espera por favor...");
+			Dialog.setCancelable(false);
+			Dialog.show();
+		}
+
+		protected Void doInBackground(String... urls) {
+			BufferedReader reader = null;
+
+			try {
+				URL url = new URL(urls[0]);
+				URLConnection conn = url.openConnection();
+				conn.setDoOutput(true);
+				// Get the server response
+				reader = new BufferedReader(new InputStreamReader(
+						conn.getInputStream()));
+				StringBuilder sb = new StringBuilder();
+				String line = null;
+				while ((line = reader.readLine()) != null) {
+					// Append server response in string
+					sb.append(line + "");
+				}
+				// Append Server Response To Content String
+				Content = sb.toString();
+			} catch (Exception ex) {
+				Error = ex.getMessage();
+			} finally {
+				try {
+					reader.close();
+				} catch (Exception ex) {
+				}
+			}
+			return null;
+		}
+
+		protected void onPostExecute(Void unused) {
+			if (Error != null) {
+				// settext with error
+				peso.setText("NaN");
+				bitcoin.setText("NaN");
+			} else {
+				JSONObject jsonResponse;
+				try {
+					jsonResponse = new JSONObject(Content);
+
+					this.btc = (float) jsonResponse.getDouble("btc");
+					this.dolar = (float) jsonResponse.getDouble("dolar");
+					this.mxn = (float) jsonResponse.getDouble("mxn");
+					Toast.makeText(getApplicationContext(),
+							"Valor actual bitcoin $" + this.mxn,
+							Toast.LENGTH_SHORT).show();
+
+					inputTextWatcherBitcoin = new TextWatcher() {
+						public void afterTextChanged(Editable s) {
+							peso.removeTextChangedListener(inputTextWatcherPeso);
+							float realValue;
+							if (s.toString().compareTo("") != 0) {
+								realValue = (float) (Double.valueOf(s
+										.toString().replace(",", ".")) * getMXN());
+								DecimalFormat decimalFormat = new DecimalFormat(
+										"0.########");
+								peso.setText(decimalFormat.format(realValue)
+										.replace(",", "."));
+							} else
+								peso.setText("");
+							peso.addTextChangedListener(inputTextWatcherPeso);
+						}
+
+						@Override
+						public void beforeTextChanged(CharSequence s,
+								int start, int count, int after) {
+						}
+
+						@Override
+						public void onTextChanged(CharSequence s, int start,
+								int before, int count) {
+						}
+					};
+					inputTextWatcherPeso = new TextWatcher() {
+						public void afterTextChanged(Editable s) {
+							bitcoin.removeTextChangedListener(inputTextWatcherBitcoin);
+							float realValue;
+							if (s.toString().compareTo("") != 0) {
+								realValue = (float) (Float.valueOf(s.toString()
+										.replace(",", ".")) / getMXN());
+								DecimalFormat decimalFormat = new DecimalFormat(
+										"0.#####");
+								bitcoin.setText(decimalFormat.format(realValue)
+										.toString().replace(",", "."));
+							} else
+								bitcoin.setText("");
+							bitcoin.addTextChangedListener(inputTextWatcherBitcoin);
+						}
+
+						@Override
+						public void beforeTextChanged(CharSequence s,
+								int start, int count, int after) {
+						}
+
+						@Override
+						public void onTextChanged(CharSequence s, int start,
+								int before, int count) {
+						}
+					};
+
+					bitcoin.addTextChangedListener(inputTextWatcherBitcoin);
+					peso.addTextChangedListener(inputTextWatcherPeso);
+
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+			Dialog.dismiss();
+		}
+
+		public double getBTC() {
+			return this.btc;
+		}
+
+		public double getMXN() {
+			return this.mxn;
+		}
+
+		public double getDolar() {
+			return this.dolar;
+		}
+	}
 
 }
